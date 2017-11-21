@@ -27,12 +27,12 @@ class ImagerProfile(models.Model):
                         ['CEL', 'Celebrations'])
     website = models.CharField(max_length=100)
     location = models.CharField(max_length=50)
-    bio = models.CharField(max_lenght=500)
-    phone = models.CharField(max_lenght=10)
+    bio = models.CharField(max_length=500)
+    phone = models.CharField(max_length=10)
     fee = models.FloatField()
     active = ActiveProfileManager()
-    services = models.CharField(choices=SERVICES_CHOICES)
-    photo_styles = models.CharField(choices=STYLE_CHOICES)
+    services = models.CharField(choices=SERVICES_CHOICES, max_length=30)
+    photo_styles = models.CharField(choices=STYLE_CHOICES, max_length=30)
 
     @property
     def is_active(self):
