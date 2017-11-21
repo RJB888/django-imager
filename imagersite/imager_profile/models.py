@@ -15,6 +15,10 @@ class ActiveProfileManager(models.Manager):
 class ImagerProfile(models.Model):
     """."""
 
+    user = models.OneToOneField(User,
+                                related_name='profile',
+                                on_delete=models.CASCADE)
+
     STYLE_CHOICES = (['BW', 'black and white'],
                      ['PT', 'portrait'],
                      ['FAM', 'family'])
@@ -29,8 +33,6 @@ class ImagerProfile(models.Model):
     active = ActiveProfileManager()
     services = models.CharField(choices=SERVICES_CHOICES)
     photo_styles = models.CharField(choices=STYLE_CHOICES)
-    user = models.OneToOneField(User, related_name='profile',
-                                on_delete=models.CASCADE)
 
     @property
     def is_active(self):
