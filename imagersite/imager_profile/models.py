@@ -31,10 +31,16 @@ class ImagerProfile(models.Model):
     phone = models.CharField(max_length=10)
     fee = models.FloatField()
     active = ActiveProfileManager()
-    services = models.CharField(choices=SERVICES_CHOICES, max_length=30)
-    photo_styles = models.CharField(choices=STYLE_CHOICES, max_length=30)
+    services = models.CharField(max_length=30, choices=SERVICES_CHOICES)
+    photo_styles = models.CharField(max_length=30, choices=STYLE_CHOICES)
+    user = models.OneToOneField(User, related_name='profile',
+                                on_delete=models.CASCADE)
 
     @property
     def is_active(self):
         """."""
         return self.user.is_active
+
+    def __repr__(self):
+        """."""
+        print(self.user.first_name + ', ' + self.bio)
