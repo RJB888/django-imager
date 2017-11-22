@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home_view, name='homepage'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
-    url(r'^login/', log_views.LoginView)
+    url(r'^login/', log_views.login)
 ]
