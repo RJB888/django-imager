@@ -7,6 +7,6 @@ from django.template import loader
 
 def home_view(request):
     """."""
-    template = loader.get_template('imagersite/base.html')
+    template = loader.get_template('/templates/base.html')
     response_body = template.render()
     return HttpResponse(response_body)
