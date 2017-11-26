@@ -56,13 +56,13 @@ class ProfileTestCase(TestCase):
                                                  'password2': 'UltraTest'}, follow=True)
         self.assertTrue(response.status_code == 200)
 
-    # def test_register_post_new_account_makes_email(self):
-    #     """."""
-    #     with captured_output() as (out, err):
-    #         c = Client()
-    #         c.post('/accounts/register', {'username': 'test1',
-    #                                       'email': 'test@test.com',
-    #                                       'password1': 'UltraTest',
-    #                                       'password2': 'UltraTest'})
-
-    #         pdb.set_trace()
+    def test_register_post_new_account_makes_email(self):
+        """."""
+        with captured_output() as (out, err):
+            c = Client()
+            c.post('/accounts/register', {'username': 'test1',
+                                          'email': 'test@test.com',
+                                          'password1': 'UltraTest',
+                                          'password2': 'UltraTest'})
+            output = out.getvalue().strip()
+            print(output)
