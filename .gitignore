@@ -101,3 +101,6 @@ ENV/
 .mypy_cache/
 
 node_modules
+
+imagersite/MEDIA/*
+!imagersite/MEDIA/.gitkeep

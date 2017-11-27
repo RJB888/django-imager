@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from imager_profile import views
 from django.contrib.auth import views as log_views
+from django.conf.urls.static import static
+from imagersite import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,3 +26,8 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^login/', log_views.login)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL)

@@ -1,7 +1,7 @@
 """Main Docstring Goes Here."""
 
 from django.db import models
-from django.contrib.auth.models import User
+from imager_profile.models import ImagerProfile
 
 # Create your models here.
 
@@ -17,10 +17,10 @@ class Photo(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=120, blank=True)
     date_uploaded = models.DateField(auto_now_add=True)
-    date_modified = models.DateField(auto_now_add=True)
-    date_published = models.DateField(auto_now_add=True)
+    date_modified = models.DateField(auto_now=True)
+    date_published = models.DateField(auto_now_add=True)  # should set this to auto pop when published is set to public
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE)
 
 
 class Album(models.Model):
@@ -29,9 +29,15 @@ class Album(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=120, blank=True)
     date_uploaded = models.DateField(auto_now_add=True)
-    date_modified = models.DateField(auto_now_add=True)
+    date_modified = models.DateField(auto_now=True)
     date_published = models.DateField(auto_now_add=True)
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE)
     photo = models.ManyToManyField(Photo, blank=True)
-    cover = models.OneToOneField(Photo, related_name='+', blank=True)
+    cover = models.ForeignKey(Photo, related_name='+', blank=True)
+
+
+# new stuff
+
+# @receiver(post_save, sender=User)
+# def create_profile(sender, **kwargs):
