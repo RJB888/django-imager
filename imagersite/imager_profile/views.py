@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 def home_view(request):
     """."""
-    # # template = loader.get_template('imagersite/base.html')
-    # # response_body = template.render()
-    # # return HttpResponse(response_body)
-    # return render(request, 'imagersite/base.html', {})
+    # template = loader.get_template('imagersite/base.html')
+    # response_body = template.render()
+    # return HttpResponse(response_body)
+    return render(request, 'imagersite/base.html', {})
