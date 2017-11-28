@@ -1,14 +1,14 @@
 {% extends "imagersite/base.html" %}
 
 {% block content2 %}
-<h1>{{request.user.username}} Profile</h1>
+<h1>{{request.user.username}}'s Profile</h1>
 <div>
-    <h2></h2>
+    <h2>Photo Stats</h2>
     <ul>
-        <li>a</li>
-        <li>b</li>
-        <li>c</li>
-    </ul>
+        <li>You have {{ pub_photos|length }} public photos</li>
+        <li>You have {{ pub_albums|length }} public albums</li>
+        <li>You have {{ priv_photos|length }} private photos</li>
+        <li>You have {{ priv_albums|length }} private albums</li>
 </div>
 <div>
     <h2></h2>

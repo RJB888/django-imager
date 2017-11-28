@@ -41,6 +41,6 @@ class ImagerProfile(models.Model):
         """."""
         return self.user.is_active
 
-    def __repr__(self):
-        """."""
-        print(self.user.first_name + ', ' + self.bio)
+    # def __repr__(self):
+    #     """."""
+    #     print(self.user.first_name + ', ' + self.bio)

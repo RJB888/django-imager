@@ -20,7 +20,7 @@ class Photo(models.Model):
     date_modified = models.DateField(auto_now=True)
     date_published = models.DateField(auto_now_add=True)  # should set this to auto pop when published is set to public
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
-    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField(upload_to='images', null=True)
 
 
@@ -33,9 +33,9 @@ class Album(models.Model):
     date_modified = models.DateField(auto_now=True)
     date_published = models.DateField(auto_now_add=True)
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
-    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE)
-    photo = models.ManyToManyField(Photo, blank=True)
-    cover = models.ForeignKey(Photo, related_name='+', blank=True)
+    user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE, related_name='album')
+    photo = models.ManyToManyField(Photo, blank=True, related_name='album')
+    cover = models.ForeignKey(Photo, related_name='cover', blank=True)
 
 
 # new stuff

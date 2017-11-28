@@ -21,7 +21,7 @@
 
 
     {% if request.user.is_authenticated %}
-        <p>Logged in: {{ user.username }}</p>
+        <p>Logged in: <a href="{% url 'profile' %}">{{ user.username }}</a></p>
         <a href="{% url 'auth_logout' %}">Log out</a> |
         <a href="{% url 'auth_password_change' %}">Change Password</a>
     {% else %}

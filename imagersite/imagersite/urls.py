@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^$', views.home_view, name='homepage'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^login/', log_views.login),
-    url(r'^profile', proflie_view)
+    url(r'^profile', proflie_view, name='profile')
 ]
 
 if settings.DEBUG:
