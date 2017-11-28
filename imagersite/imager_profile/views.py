@@ -13,4 +13,4 @@ def proflie_view(request):
     # response_body = template.render()
     # return HttpResponse(response_body)
     # pdb.set_trace()
-    return render(request, 'imagersite/base.html', {})
+    return render(request, 'imagersite/profile.html', {})
