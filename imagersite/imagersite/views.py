@@ -23,4 +23,4 @@ def home_view(request):
     else:
         for image in published:
             carousel_list.append(image)
-    return render(request, 'imagersite/base.html', {'images': carousel_list})
+    return render(request, 'imagersite/home.html', {'images': carousel_list})

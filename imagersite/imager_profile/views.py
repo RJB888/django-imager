@@ -7,7 +7,7 @@ import pdb
 # Create your views here.
 
 
-def home_view(request):
+def proflie_view(request):
     """."""
     # template = loader.get_template('imagersite/base.html')
     # response_body = template.render()

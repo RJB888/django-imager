@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from imagersite import views
 from django.contrib.auth import views as log_views
+from imager_profile.views import proflie_view
 from django.conf.urls.static import static
 from imagersite import settings
 
@@ -24,7 +25,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home_view, name='homepage'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
-    url(r'^login/', log_views.login)
+    url(r'^login/', log_views.login),
+    url(r'^profile', proflie_view)
 ]
 
 if settings.DEBUG:
