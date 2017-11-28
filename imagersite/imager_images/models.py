@@ -21,6 +21,7 @@ class Photo(models.Model):
     date_published = models.DateField(auto_now_add=True)  # should set this to auto pop when published is set to public
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
     user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images', null=True)
 
 
 class Album(models.Model):
