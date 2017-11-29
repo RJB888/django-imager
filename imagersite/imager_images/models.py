@@ -35,7 +35,7 @@ class Album(models.Model):
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
     user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE, related_name='album')
     photo = models.ManyToManyField(Photo, blank=True, related_name='album')
-    cover = models.ForeignKey(Photo, related_name='cover', blank=True)
+    cover = models.ForeignKey(Photo, related_name='cover', blank=True, null=True)
 
 
 # new stuff

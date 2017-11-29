@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'imagersite',
     'bootstrap3',
     'imager_images',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
