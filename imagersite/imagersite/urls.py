@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^login/', log_views.login),
     url(r'^profile/(\w+)', other_profile_view, name='other_profile'),
     url(r'^profile/', my_proflie_view, name='my_profile'),
+    url(r'^images/library/', views.LibraryView.as_view(), name="library")
 ]
 
 if settings.DEBUG:
