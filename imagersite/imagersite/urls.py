@@ -19,7 +19,7 @@ from imagersite import views, settings
 from django.contrib.auth import views as log_views
 from imager_profile.views import my_proflie_view, other_profile_view
 from django.conf.urls.static import static
-from imager_images.views import PublishedPhotoView
+from imager_images.views import PublishedPhotoView, IndividualPhotoView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^profile/(\w+)', other_profile_view, name='other_profile'),
     url(r'^profile/', my_proflie_view, name='my_profile'),
     url(r'^images/library/', views.LibraryView.as_view(), name="library"),
+    url(r'^images/photos/(?P<pk>\d+)', IndividualPhotoView.as_view(), name="individual_photos"),
     url(r'^images/photos/', PublishedPhotoView.as_view(), name="public_photos")
 ]
 
