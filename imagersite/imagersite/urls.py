@@ -1,4 +1,4 @@
-"""imagersite URL Configuration
+"""imagersite URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -19,8 +19,10 @@ from imagersite import views, settings
 from django.contrib.auth import views as log_views
 from imager_profile.views import my_proflie_view, other_profile_view
 from django.conf.urls.static import static
-from imager_images.views import PublishedPhotoView,\
-    IndividualPhotoView, IndividualAlbumView, PublishedAlbumView
+from imager_images import views as image_views
+# from imager_images.views import PublishedPhotoView,\
+#     IndividualPhotoView, IndividualAlbumView, PublishedAlbumView,\
+#     CreatePhotoView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,11 +32,22 @@ urlpatterns = [
     url(r'^profile/(\w+)', other_profile_view, name='other_profile'),
     url(r'^profile/', my_proflie_view, name='my_profile'),
     url(r'^images/library/', views.LibraryView.as_view(), name="library"),
-    url(r'^images/photos/(?P<pk>\d+)', IndividualPhotoView.as_view(), name="individual_photos"),
-    url(r'^images/photos/', PublishedPhotoView.as_view(), name="public_photos"),
-    url(r'^images/albums/(?P<pk>\d+)', IndividualAlbumView.as_view(), name="individual_album"),
-    url(r'^images/albums/', PublishedAlbumView.as_view(), name="public_album")
+    url(r'^images/photos/(?P<pk>\d+)',
+        image_views.IndividualPhotoView.as_view(),
+        name="individual_photos"),
+    url(r'^images/photos/', image_views.PublishedPhotoView.as_view(),
+        name="public_photos"),
+    url(r'^images/albums/(?P<pk>\d+)',
+        image_views.IndividualAlbumView.as_view(),
+        name="individual_album"),
+    url(r'^images/albums/', image_views.PublishedAlbumView.as_view(),
+        name="public_album"),
+    url(r'^images/photos/add/', image_views.CreatePhotoView.as_view(),
+        name="photo_form"),
+    url(r'^images/albums/add/', image_views.CreateAlbumView.as_view(),
+        name="album_form")
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -1,6 +1,9 @@
+"""."""
+
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic import CreateView
 from imager_images.models import Photo, Album
 
 # Create your views here.
@@ -55,3 +58,23 @@ class IndividualAlbumView(DetailView):
         """."""
         context = super(IndividualAlbumView, self).get_context_data(**kwargs)
         return context
+
+
+class CreatePhotoView(CreateView):
+    """."""
+
+    template_name = 'imager_images/create_photo.html'
+    model = Photo
+
+    fields = ['title', 'description', 'published', 'user', 'image']
+    success_url = "images/library"
+
+
+class CreateAlbumView(CreateView):
+    """."""
+
+    template_name = 'imager_images/create_album.html'
+    model = Album
+
+    fields = ['title', 'description', 'published', 'user', 'photo', 'cover']
+    success_url = "images/library"
