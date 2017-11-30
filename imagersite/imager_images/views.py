@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
+from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
 
 # Create your views here.
@@ -67,7 +68,7 @@ class CreatePhotoView(CreateView):
     model = Photo
 
     fields = ['title', 'description', 'published', 'user', 'image']
-    success_url = "images/library"
+    success_url = '/imagersite/images/library'
 
 
 class CreateAlbumView(CreateView):
