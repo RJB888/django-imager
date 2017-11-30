@@ -5,7 +5,7 @@
 
 {% block content2 %}
 <!-- context['album_list'][0].cover.image -->
-<h2>Albums</h2>
+<h2>Library</h2>
     <ul>
     {% for album in album_list %}
         <li>{{ album.title }}</li>
@@ -19,7 +19,8 @@
         {% endif %}
     {% endfor %}
     </ul>
-<h2>Photos</h2>
+<a href="{% url 'photo_form' %}"><button type="button" class="btn btn-primary">Add Photo</button></a>
+<a href="{% url 'album_form' %}"><button type="button" class="btn btn-primary">Add Album</button></a>
 
 
 {% endblock %}

@@ -23,6 +23,10 @@ class Photo(models.Model):
     user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField(upload_to='images', null=True)
 
+    def __str__(self):
+        """."""
+        return self.title
+
 
 class Album(models.Model):
     """Do some albuming."""
@@ -37,6 +41,9 @@ class Album(models.Model):
     photo = models.ManyToManyField(Photo, blank=True, related_name='album')
     cover = models.ForeignKey(Photo, related_name='cover', blank=True, null=True)
 
+    def __str__(self):
+        """."""
+        return self.title
 
 # new stuff
 

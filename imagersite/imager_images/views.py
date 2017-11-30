@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
 from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -68,7 +69,7 @@ class CreatePhotoView(CreateView):
     model = Photo
 
     fields = ['title', 'description', 'published', 'user', 'image']
-    success_url = '/imagersite/images/library'
+    success_url = reverse_lazy('library')
 
 
 class CreateAlbumView(CreateView):
@@ -78,4 +79,4 @@ class CreateAlbumView(CreateView):
     model = Album
 
     fields = ['title', 'description', 'published', 'user', 'photo', 'cover']
-    success_url = "images/library"
+    success_url = reverse_lazy('library')
