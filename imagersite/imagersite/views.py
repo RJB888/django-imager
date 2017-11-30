@@ -37,5 +37,9 @@ class LibraryView(ListView):
     def get_context_data(self, **kwargs):
         """."""
         context = super(LibraryView, self).get_context_data(**kwargs)
-        # import pdb; pdb.set_trace()
+        users_photos = Photo.objects.filter(user=self.request.user.profile)
+        users_albums = Album.objects.filter(user=self.request.user.profile)
+        context['users_photos'] = users_photos
+        context['users_albums'] = users_albums
+        import pdb; pdb.set_trace()
         return context
