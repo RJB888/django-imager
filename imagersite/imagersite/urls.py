@@ -19,7 +19,8 @@ from imagersite import views, settings
 from django.contrib.auth import views as log_views
 from imager_profile.views import my_proflie_view, other_profile_view
 from django.conf.urls.static import static
-from imager_images.views import PublishedPhotoView, IndividualPhotoView
+from imager_images.views import PublishedPhotoView,\
+    IndividualPhotoView, IndividualAlbumView, PublishedAlbumView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,7 +31,9 @@ urlpatterns = [
     url(r'^profile/', my_proflie_view, name='my_profile'),
     url(r'^images/library/', views.LibraryView.as_view(), name="library"),
     url(r'^images/photos/(?P<pk>\d+)', IndividualPhotoView.as_view(), name="individual_photos"),
-    url(r'^images/photos/', PublishedPhotoView.as_view(), name="public_photos")
+    url(r'^images/photos/', PublishedPhotoView.as_view(), name="public_photos"),
+    url(r'^images/albums/(?P<pk>\d+)', IndividualAlbumView.as_view(), name="individual_album"),
+    url(r'^images/albums/', PublishedAlbumView.as_view(), name="public_album")
 ]
 
 if settings.DEBUG:
