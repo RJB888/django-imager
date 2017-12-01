@@ -38,10 +38,12 @@
             <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
             {% endthumbnail %}
             <p>{{ album.title }}</p>
+            <a href="{% url '' %}"><button type="button" class="btn btn-primary">Edit Album</button></a>
             </div>
             {% else %}
             <div class="sm-3"><img src="{% static '100x100.png' %}">
             <p>{{ album.title }}</p>
+            <a href="{% url '' %}"><button type="button" class="btn btn-primary">Edit Album</button></a>
             </div>
             {% endif %}
             {% endfor %}
@@ -56,6 +58,7 @@
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
             {% endthumbnail %}
             <p>{{ photo.title }}</p>
+            <a href="{% url '' %}"><button type="button" class="btn btn-primary">Edit Photo</button></a>
             </div>
             {% endfor %}
         </div>
