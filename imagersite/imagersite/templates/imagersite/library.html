@@ -33,9 +33,13 @@
     <div class="container-fluid">
         <div class='row'>
             {% for album in users_albums %}
+            {% if album.cover %}
             <div class='sm-3'>{% thumbnail album.cover.image "100x100" crop="center" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
             {% endthumbnail %}
+            {% else %}
+            <div class="sm-3"><img src="{% static '100x100.png' %}"></div>
+            {% endif %}
             <p>{{ album.title }}</p>
             </div>
             {% endfor %}
