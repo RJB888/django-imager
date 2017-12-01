@@ -41,5 +41,4 @@ class LibraryView(ListView):
         users_albums = Album.objects.filter(user=self.request.user.profile)
         context['users_photos'] = users_photos
         context['users_albums'] = users_albums
-        import pdb; pdb.set_trace()
         return context
