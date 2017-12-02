@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from imagersite import views, settings
 from django.contrib.auth import views as log_views
-from imager_profile.views import my_proflie_view, other_profile_view, UpdateProfileView
+from imager_profile.views import my_proflie_view, other_profile_view, UpdateProfileView, UpdateUserView
 from django.conf.urls.static import static
 from imager_images import views as image_views
 # from imager_images.views import PublishedPhotoView,\
@@ -53,6 +53,8 @@ urlpatterns = [
         name="individual_album"),
     url(r'^images/albums/$', image_views.PublishedAlbumView.as_view(),
         name="public_album"),
+    url(r'^images/users/(?P<pk>\d+)', UpdateUserView.as_view(),
+        name="update_user"),
 ]
 
 

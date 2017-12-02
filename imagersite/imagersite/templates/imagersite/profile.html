@@ -14,8 +14,10 @@
     {% endif %}
 </div>
 <div>
-    <h2></h2>
-        <ul>
+    <h2>Personal Info</h2>
+    <ul>
+        <li>First Name: {{ profile.user.first_name }}</li>
+        <li>Last Name: {{ profile.user.last_name }}</li>
         <li>Username: {{ profile.user.username }}</li>
         <li>email: {{ profile.user.email }}</li>
         <li>phone: {{ profile.phone }}</li>
@@ -26,5 +28,8 @@
 </div>
 <div>
     <a href="{% url 'update_profile' pk=profile.id %}"><button type="button" class="btn btn-primary">Edit Profile</button></a>
+</div>
+<div>
+    <a href="{% url 'update_user' pk=profile.user.id %}"><button type="button" class="btn btn-primary">Edit User</button></a>
 </div>
 {% endblock%}

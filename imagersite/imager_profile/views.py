@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import UpdateView
 from imager_profile.models import ImagerProfile
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
 import pdb
 # from django.http import HttpResponse
 # from django.template import loader
@@ -74,8 +75,18 @@ def other_profile_view(request, username):
 
 class UpdateProfileView(UpdateView):
     """View for updating a users profile."""
+
     template_name = "imagersite/update_profile.html"
     model = ImagerProfile
-    fields = ["STYLE_CHOICES", "SERVICES_CHOICES", "website", "location",
+    fields = ["website", "location",
               "bio", "phone", "fee", "services", "photo_styles"]
+    success_url = reverse_lazy('my_profile')
+
+
+class UpdateUserView(UpdateView):
+    """View for updating a users profile."""
+
+    template_name = "imagersite/update_user.html"
+    model = User
+    fields = ["first_name", "last_name", "email"]
     success_url = reverse_lazy('my_profile')
