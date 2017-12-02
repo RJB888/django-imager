@@ -138,6 +138,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA")
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'my_profile'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
