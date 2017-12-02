@@ -4,7 +4,7 @@ from django.test import Client
 from django.test import TestCase
 from django.core import mail
 from django.contrib.auth.models import User
-from .models import Photo, Album
+from imager_images.models import Photo, Album
 import factory
 import pdb
 

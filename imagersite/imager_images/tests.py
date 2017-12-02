@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 import factory
 from .models import Photo, Album
+from imager_images.models import ImagerProfile
 
 # Create your tests here.
 
@@ -16,6 +17,15 @@ class UserFactory(factory.django.DjangoModelFactory):
         """docstring for Meta."""
 
         model = User
+
+
+class ProfileFactory(factory.django.DjangoModelFactory):
+    """."""
+
+    class Meta:
+        """docstring for Meta."""
+
+        model = ImagerProfile
 
 
 class PhotoFactory(factory.django.DjangoModelFactory):
@@ -44,26 +54,27 @@ class ImagesTestCase(TestCase):
         print("this ran")
         user1 = UserFactory.create(username="Bob")
         # user1.save()
+        profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         user2 = UserFactory.create(username="Jim")
         # user2.save()
         photo1 = PhotoFactory.create(title="birds",
                                      published="PVT",
-                                     user=user1)
+                                     user=profile1)
 
         photo2 = PhotoFactory.create(title="flowers",
                                      published="PBL",
-                                     user=user1)
+                                     user=profile1)
 
         album1 = AlbumFactory(title="First",
                               published="PVT",
-                              user=user1,
+                              user=profile1,
                               cover=photo1
                               )
         album1.photo.add(photo1)
         # import pdb; pdb.set_trace()
         album2 = AlbumFactory(title="Second",
                               published="PVT",
-                              user=user2,
+                              user=profile1,
                               cover=photo2
                               )
         # import pdb; pdb.set_trace()
@@ -80,11 +91,11 @@ class ImagesTestCase(TestCase):
 
     def test_photos_are_created(self):
         """."""
-        self.assertTrue(Photo.objects.count() == 1)
+        self.assertTrue(Photo.objects.count() == 2)
 
     def test_albums_are_created(self):
         """."""
-        self.assertTrue(Album.objects.count() == 1)
+        self.assertTrue(Album.objects.count() == 2)
 
     def test_album1_photo(self):
         """."""
