@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from imagersite import views, settings
 from django.contrib.auth import views as log_views
-from imager_profile.views import my_proflie_view, other_profile_view
+from imager_profile.views import my_proflie_view, other_profile_view, UpdateProfileView
 from django.conf.urls.static import static
 from imager_images import views as image_views
 # from imager_images.views import PublishedPhotoView,\
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^$', views.home_view, name='homepage'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^login/', log_views.login),
+    url(r'^profile/edit/(?P<pk>\d+)', UpdateProfileView.as_view(), name="update_profile"),
     url(r'^profile/(\w+)', other_profile_view, name='other_profile'),
     url(r'^profile/', my_proflie_view, name='my_profile'),
     url(r'^images/library/', views.LibraryView.as_view(), name="library"),
@@ -51,7 +52,7 @@ urlpatterns = [
         image_views.IndividualAlbumView.as_view(),
         name="individual_album"),
     url(r'^images/albums/$', image_views.PublishedAlbumView.as_view(),
-        name="public_album")
+        name="public_album"),
 ]
 
 

@@ -1,5 +1,7 @@
 from django.shortcuts import render
-
+from django.views.generic.edit import UpdateView
+from imager_profile.models import ImagerProfile
+from django.urls import reverse_lazy
 import pdb
 # from django.http import HttpResponse
 # from django.template import loader
@@ -62,10 +64,18 @@ def other_profile_view(request, username):
             public_albums.append(album)
         else:
             private_albums.append(album)
-    pdb.set_trace()
     return render(request, 'imagersite/other_profile.html',
                            {'pub_photos': public_photos,
                             'priv_photos': private_photos,
                             'pub_albums': public_albums,
                             'priv_albums': private_albums,
                             'profile': profile})
+
+
+class UpdateProfileView(UpdateView):
+    """View for updating a users profile."""
+    template_name = "imagersite/update_profile.html"
+    model = ImagerProfile
+    fields = ["STYLE_CHOICES", "SERVICES_CHOICES", "website", "location",
+              "bio", "phone", "fee", "services", "photo_styles"]
+    success_url = reverse_lazy('my_profile')

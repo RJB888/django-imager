@@ -25,11 +25,6 @@
     </ul>
 </div>
 <div>
-    <h2></h2>
-        <ul>
-        <li>a</li>
-        <li>b</li>
-        <li>c</li>
-    </ul>
+    <a href="{% url 'update_profile' pk=profile.id %}"><button type="button" class="btn btn-primary">Edit Profile</button></a>
 </div>
 {% endblock%}
