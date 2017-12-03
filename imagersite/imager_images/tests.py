@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 import factory
 from .models import Photo, Album
 from imager_images.models import ImagerProfile
+from django.test import Client
+import pdb
 
 # Create your tests here.
 
@@ -52,14 +54,12 @@ class ImagesTestCase(TestCase):
     def setUp(self):
         """Make object."""
         print("this ran")
-        user1 = UserFactory.create(username="Bob")
+        user1 = UserFactory.create(username="Bob", first_name='Bob', last_name='Boberts')
         # user1.save()
         profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         user2 = UserFactory.create(username="Jim")
         # user2.save()
-        photo1 = PhotoFactory.create(title="birds",
-                                     published="PVT",
-                                     user=profile1)
+        photo1 = PhotoFactory.create(title='title', description='Elephant', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
 
         photo2 = PhotoFactory.create(title="flowers",
                                      published="PBL",
@@ -99,17 +99,39 @@ class ImagesTestCase(TestCase):
 
     def test_album1_photo(self):
         """."""
-        self.assertTrue(Album.objects.get(title='First').photo.get(title="birds"))
+        self.assertTrue(Album.objects.get(title='First').photo.get(title="title"))
 
-    # def test_user_has_multiple_photos(self):
-    #     """."""
-    #     self.assertTrue(Photo.objects.get(id=2).user.username == "Bob")
+    def test_individual_photos_route(self):
+        """Test the detail view for a photo view shows url for image."""
+        number = Photo.objects.get(title='title').id
+        c = Client()
+        url = '/images/photos/' + str(number)
+        response = c.get(url)
+        self.assertTrue(b'title' in response.content)
 
-    # def test_photo_model(self):
-    #     pass
-    # def test_album_model(self):
-    #     pass
+    def test_individual_photos_route2(self):
+        """Test the detail view for a photo shows first and last name."""
+        number = Photo.objects.get(title='title').id
+        c = Client()
+        url = '/images/photos/' + str(number)
+        response = c.get(url)
+        self.assertTrue(b'Bob Boberts' in response.content)
 
+    def test_individual_photos_route3(self):
+        """Test the detail view for a photo shows title of image."""
+        number = Photo.objects.get(title='title').id
+        c = Client()
+        url = '/images/photos/' + str(number)
+        response = c.get(url)
+        self.assertTrue(b'title' in response.content)
+
+    def test_individual_photos_route4(self):
+        """Test the detail view for a photo shows description."""
+        number = Photo.objects.get(title='title').id
+        c = Client()
+        url = '/images/photos/' + str(number)
+        response = c.get(url)
+        self.assertTrue(b'Elephant' in response.content)
 """
 Test that one user can have several photos
 Test that each photo can only have one user
