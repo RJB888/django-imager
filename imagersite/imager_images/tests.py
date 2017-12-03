@@ -58,25 +58,17 @@ class ImagesTestCase(TestCase):
         # user1.save()
         profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         user2 = UserFactory.create(username="Jim")
-        # user2.save()
+        profile2 = ProfileFactory.create(user=user2, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         photo1 = PhotoFactory.create(title='title', description='Elephant', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
 
-        photo2 = PhotoFactory.create(title="flowers",
-                                     published="PBL",
-                                     user=profile1)
-
-        album1 = AlbumFactory(title="First",
-                              published="PVT",
-                              user=profile1,
-                              cover=photo1
-                              )
+        photo2 = PhotoFactory.create(title='White Elephant', description='in the room', published='PVT', user=profile1, image='https://pixabay.com/p-361514/?no_redirect')
+        photo3 = PhotoFactory.create(title='Jims Photo', description='by jim', published='PBL', user=profile2, image='https://hiset.ets.org/rsc/img/icons/icon-tt-checklist.svg')
+        album1 = AlbumFactory(title="First", description='who cares',
+                              published="PBL", user=profile1)
         album1.photo.add(photo1)
         # import pdb; pdb.set_trace()
-        album2 = AlbumFactory(title="Second",
-                              published="PVT",
-                              user=profile1,
-                              cover=photo2
-                              )
+        album2 = AlbumFactory(title="Second", description='im private',
+                              published="PVT", user=profile1)
         # import pdb; pdb.set_trace()
         album2.photo.add(photo2)
         # album3 = AlbumFactory(title="Third",
@@ -91,7 +83,7 @@ class ImagesTestCase(TestCase):
 
     def test_photos_are_created(self):
         """."""
-        self.assertTrue(Photo.objects.count() == 2)
+        self.assertTrue(Photo.objects.count() == 3)
 
     def test_albums_are_created(self):
         """."""
@@ -132,6 +124,29 @@ class ImagesTestCase(TestCase):
         url = '/images/photos/' + str(number)
         response = c.get(url)
         self.assertTrue(b'Elephant' in response.content)
+
+    def test_gallery_view_shows_only_public_photos(self):
+        """Test the detail view for a photo shows description."""
+        c = Client()
+        url = '/images/photos/'
+        response = c.get(url)
+        self.assertTrue(len(response.context['display_photos']) == 2)
+
+    def test_gallery_view_shows_multiple_users_photos(self):
+        """Test the detail view for a photo shows description."""
+        c = Client()
+        url = '/images/photos/'
+        response = c.get(url)
+        for photo in response.context['display_photos']:
+            self.assertTrue(photo.published == "PBL")
+
+    def test_album_gallery_only_shows_public(self):
+        """Ablum view for all album only shows public."""
+        c = Client()
+        url = '/images/albums/'
+        response = c.get(url)
+        self.assertTrue(b'First' in response.content)
+        self.assertTrue(b'Second' not in response.content)
 """
 Test that one user can have several photos
 Test that each photo can only have one user
