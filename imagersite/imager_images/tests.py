@@ -58,7 +58,7 @@ class ImagesTestCase(TestCase):
         # user1.save()
         profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         user2 = UserFactory.create(username="Jim")
-        profile2 = ProfileFactory.create(user=user2, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
+        profile2 = ProfileFactory.create(user=user2, website='google', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         photo1 = PhotoFactory.create(title='title', description='Elephant', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
 
         photo2 = PhotoFactory.create(title='White Elephant', description='in the room', published='PVT', user=profile1, image='https://pixabay.com/p-361514/?no_redirect')
@@ -147,6 +147,37 @@ class ImagesTestCase(TestCase):
         response = c.get(url)
         self.assertTrue(b'First' in response.content)
         self.assertTrue(b'Second' not in response.content)
+
+    def test_individual_album_response_200(self):
+        """Ablum view for all album only shows public."""
+        number = Album.objects.get(title='First').id
+        c = Client()
+        url = '/images/albums/' + str(number)
+        response = c.get(url)
+        self.assertTrue(response.status_code == 200)
+
+    def test_individual_album_shows_title(self):
+        """Ablum view for all album only shows public."""
+        number = Album.objects.get(title='First').id
+        c = Client()
+        url = '/images/albums/' + str(number)
+        response = c.get(url)
+        self.assertTrue(b"First" in response.content)
+
+    def test_post_to_create_photo(self):
+        """A post request to the add photo route should add it to db."""
+        c = Client()
+        user1 = ImagerProfile.active.first()
+        res = self.client.post('/images/photos/add/', {'title': 'Whaddup',
+                                                       'description': 'I made this',
+                                                       'published': 'PBL',
+                                                       'user': user1,
+                                                       'image': 'http://mobileapps.its.umich.edu/sites/all/themes/umzentwo/images/testing-icon.png'})
+        pdb.set_trace()
+        photo = Photo.objects.get(title='Whaddup')
+        self.assertTrue(photo)
+
+
 """
 Test that one user can have several photos
 Test that each photo can only have one user
