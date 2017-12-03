@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.core import mail
 from django.contrib.auth.models import User
 from imager_images.models import Photo, Album
+from imager_profile.models import ImagerProfile
 import factory
 import pdb
 
@@ -43,12 +44,18 @@ class ProfileTestCase(TestCase):
                                                  'password2': 'UltraTest'}, follow=True)
         self.assertTrue(response.status_code == 200)
 
-    # def test_homepage_has_photos_in_db(self):
-    #     """Homepage shows photos when they exist in database."""
+    def test_homepage_has_photos_in_db(self):
+        """Homepage shows photos when they exist in database."""
+        User.objects.create(username='Bob')
+        user1 = User.objects.get(username='Bob')
+        profile1 = ImagerProfile.active.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
+        Photo.objects.create(title='title', description=' ', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
+        c = Client()
+        response = c.get('/')
+        self.assertTrue(b"/media/https%3A/i.vimeocdn.com/portrait/58832_300x300" in response.content)
 
-    #     User.objects.create(username='Bob')
-    #     user1 = User.objects.get(username='Bob')
-    #     Photo.objects.create(title='title', description=' ', published='PBL', user=user1, image='https://i.vimeocdn.com/portrait/58832_300x300')
-    #     c = Client()
-    #     response = c.get('/')
-    #     pdb.set_trace()
+    def test_homepage_has_placeholder_no_images_in_db(self):
+        """Homepage shows placeholder images when no images in database."""
+        c = Client()
+        response = c.get('/')
+        self.assertTrue(b"http://placehold.it/900x350" in response.content)
