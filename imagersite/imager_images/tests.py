@@ -235,6 +235,44 @@ class ImagesTestCase(TestCase):
                           'image': image})
         self.assertTrue(Photo.objects.get(id=photo.id).title == "Bad")
 
+    def test_post_to_update_photo_redirects_to_library(self):
+        """A post request to update photo route edits it in the db."""
+        file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
+        image = SimpleUploadedFile('dreams.jpg', file.read())
+        photo = Photo.objects.first()
+        user1 = ImagerProfile.active.first()
+        res = self.client.post(reverse_lazy('edit_photo',
+                               kwargs={'pk': photo.id}),
+                               {'title': 'Bad',
+                                'description': 'changed',
+                                'published': 'PBL',
+                                'user': user1.id,
+                                'image': image})
+        self.assertTrue(res.url == '/images/library/')
+
+    def test_post_to_update_album(self):
+        """A post request to update photo route edits it in the db."""
+        album = Album.objects.first()
+        user1 = ImagerProfile.active.first()
+        self.client.post(reverse_lazy('edit_album', kwargs={'pk': album.id}),
+                         {'title': 'Bad',
+                          'description': 'changed',
+                          'published': 'PBL',
+                          'user': user1.id})
+        self.assertTrue(Album.objects.get(id=album.id).title == "Bad")
+
+    def test_post_to_update_album_redirects_to_library(self):
+        """A post request to update photo route edits it in the db."""
+        album = Album.objects.first()
+        user1 = ImagerProfile.active.first()
+        res = self.client.post(reverse_lazy('edit_album',
+                               kwargs={'pk': album.id}),
+                               {'title': 'Bad',
+                                'description': 'changed',
+                                'published': 'PBL',
+                                'user': user1.id})
+        self.assertTrue(res.url == '/images/library/')
+
 
 """
 Test that one user can have several photos
