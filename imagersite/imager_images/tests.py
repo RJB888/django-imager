@@ -2,11 +2,16 @@
 
 
 from django.test import TestCase
+import os
 from django.contrib.auth.models import User
 import factory
+from imagersite.settings import BASE_DIR
 from .models import Photo, Album
 from imager_images.models import ImagerProfile
 from django.test import Client
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse_lazy
+
 import pdb
 
 # Create your tests here.
@@ -53,7 +58,7 @@ class ImagesTestCase(TestCase):
 
     def setUp(self):
         """Make object."""
-        print("this ran")
+        print('this ran')
         user1 = UserFactory.create(username="Bob", first_name='Bob', last_name='Boberts')
         # user1.save()
         profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
@@ -166,16 +171,69 @@ class ImagesTestCase(TestCase):
 
     def test_post_to_create_photo(self):
         """A post request to the add photo route should add it to db."""
-        c = Client()
+        file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
+        photo = SimpleUploadedFile('dreams.jpg', file.read())
         user1 = ImagerProfile.active.first()
-        res = self.client.post('/images/photos/add/', {'title': 'Whaddup',
-                                                       'description': 'I made this',
-                                                       'published': 'PBL',
-                                                       'user': user1,
-                                                       'image': 'http://mobileapps.its.umich.edu/sites/all/themes/umzentwo/images/testing-icon.png'})
-        pdb.set_trace()
-        photo = Photo.objects.get(title='Whaddup')
-        self.assertTrue(photo)
+        print('testt')
+        self.client.post(reverse_lazy('photo_form'),
+                         {'title': 'Whaddup',
+                          'description': 'I made this',
+                          'published': 'PBL',
+                          'user': user1.id,
+                          'image': photo})
+        output = Photo.objects.get(title='Whaddup')
+        self.assertTrue(output)
+
+    def test_post_new_photo_redirects_to_library(self):
+        """A post request to the add photo route should add it to db."""
+        file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
+        photo = SimpleUploadedFile('dreams.jpg', file.read())
+        user1 = ImagerProfile.active.first()
+        res = self.client.post(reverse_lazy('photo_form'),
+                               {'title': 'Whaddup',
+                                'description': 'I made this',
+                                'published': 'PBL',
+                                'user': user1.id,
+                                'image': photo})
+
+        self.assertTrue(res.url == '/images/library/')
+
+    def test_post_to_create_album(self):
+        """A post request to the add album route should add it to db."""
+        user1 = ImagerProfile.active.first()
+        print('testt')
+        self.client.post(reverse_lazy('album_form'),
+                         {'title': 'Thriller',
+                          'description': 'I made this',
+                          'published': 'PBL',
+                          'user': user1.id})
+        output = Album.objects.get(title='Thriller')
+        self.assertTrue(output)
+
+    def test_post_new_album_redirects_to_library(self):
+        """A post request to the add photo route should add it to db."""
+        user1 = ImagerProfile.active.first()
+        res = self.client.post(reverse_lazy('album_form'),
+                               {'title': 'Thriller',
+                                'description': 'I made this',
+                                'published': 'PBL',
+                                'user': user1.id})
+
+        self.assertTrue(res.url == '/images/library/')
+
+    def test_post_to_update_photo(self):
+        """A post request to update photo route edits it in the db."""
+        file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
+        image = SimpleUploadedFile('dreams.jpg', file.read())
+        photo = Photo.objects.first()
+        user1 = ImagerProfile.active.first()
+        self.client.post(reverse_lazy('edit_photo', kwargs={'pk': photo.id}),
+                         {'title': 'Bad',
+                          'description': 'changed',
+                          'published': 'PBL',
+                          'user': user1.id,
+                          'image': image})
+        self.assertTrue(Photo.objects.get(id=photo.id).title == "Bad")
 
 
 """

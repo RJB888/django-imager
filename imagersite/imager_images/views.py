@@ -71,6 +71,11 @@ class CreatePhotoView(CreateView):
 
     fields = ['title', 'description', 'published', 'user', 'image']
     success_url = reverse_lazy('library')
+    
+    # def post(self, *args, **kwargs):
+    #     import pdb; pdb.set_trace()
+    #     context = super(CreatePhotoView, self).post(**kwargs)
+    #     return context
 
 
 class EditPhotoView(UpdateView):
@@ -81,6 +86,7 @@ class EditPhotoView(UpdateView):
 
     fields = ['title', 'description', 'published', 'user', 'image']
     success_url = reverse_lazy('library')
+    print('and here')
 
 
 class CreateAlbumView(CreateView):
@@ -91,6 +97,7 @@ class CreateAlbumView(CreateView):
 
     fields = ['title', 'description', 'published', 'user', 'photo', 'cover']
     success_url = reverse_lazy('library')
+    print('and here')
 
 
 class EditAlbumView(UpdateView):
