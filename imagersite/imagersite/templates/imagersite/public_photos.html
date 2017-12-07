@@ -1,0 +1,13 @@
+{% extends 'imagersite/base.html' %}
+{% load thumbnail %}
+
+{% block content2 %}
+<ul>
+{% for image in display_photos %}
+{# <div> <image src='{{ image.image.url }}'></div> #}
+    <li><a href="   ./{{ image.id }}">{% thumbnail image.image "100x100" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
+    {% endthumbnail %}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

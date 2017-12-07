@@ -1,0 +1,19 @@
+{% extends 'imagersite/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block content2 %}
+<ul>
+    {% for album in display_albums %}
+        <li>{{ album.title }}</li>
+        {% if album.cover %}
+        <li><a href="./{{ album.id }}">{% thumbnail album.cover.image "100x100" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
+            {% endthumbnail %}</a></li>
+        {% else %}
+        <li><a href="./{{ album.id }}"><img src="{% static '100x100.png' %}"/></a>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

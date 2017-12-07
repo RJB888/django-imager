@@ -1,0 +1,9 @@
+{% extends 'imagersite/base.html' %}
+
+{% block content2 %}
+<h3>{{ photo.title }}</h3>
+<p>Photo by: {{ photo.user.user.first_name}} {{ photo.user.user.last_name}}.
+ Published on: {{ photo.date_published }}.</p>
+<p><img src="{{ photo.image.url }}"></p>
+<p>{{ photo.description }}</p>
+{% endblock %}

@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'imager_profile'
+    'imager_profile',
+    'imagersite',
+    'bootstrap3',
+    'imager_images',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -125,4 +129,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA")
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
+LOGIN_REDIRECT_URL = 'my_profile'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

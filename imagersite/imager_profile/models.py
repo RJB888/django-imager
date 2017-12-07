@@ -33,14 +33,12 @@ class ImagerProfile(models.Model):
     active = ActiveProfileManager()
     services = models.CharField(max_length=30, choices=SERVICES_CHOICES)
     photo_styles = models.CharField(max_length=30, choices=STYLE_CHOICES)
-    user = models.OneToOneField(User, related_name='profile',
-                                on_delete=models.CASCADE)
 
     @property
     def is_active(self):
         """."""
         return self.user.is_active
 
-    def __repr__(self):
+    def __str__(self):
         """."""
-        print(self.user.first_name + ', ' + self.bio)
+        return self.user.username
