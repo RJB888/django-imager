@@ -1,0 +1,55 @@
+---
+- hosts: aws_remote
+  become: yes
+  become_method: sudo
+  tasks:
+
+    - name: update ubuntu system
+      apt: update_cache=yes
+      become: yes
+      become_method: sudo
+
+    - name: Install Basic Unix-level services
+      apt: name={{ item }} state=latest
+      with_items:
+        - nginx
+        - python3
+        - python3-pip
+        - python3.4-venv
+        - git
+        - python3-dev
+        - libpq-dev
+
+    - name: clone Django Imagersite
+      git:
+        clone=yes
+        repo=https://github.com/RJB888/django-imager
+        dest=/home/ubuntu/django-imager
+
+    - name: Create a virtual environment in the django-imager directory
+      command: python3 -m venv /home/ubuntu/django-imager/ENV
+
+    - name: Install gunicorn to the virtual environment
+      pip:
+        virtualenv=/home/ubuntu/django-imager/ENV
+        name=gunicorn
+
+    - name: Install django-imager app
+      pip:
+        virtualenv=/home/ubuntu/django-imager/ENV
+        requirements=/home/ubuntu/django-imager/requirements.pip
+
+    - name: Register the old default file
+      stat: path=/etc/nginx/sites-available/default.old
+      register: default_stat
+
+    - name: Rename old default file if a copy doesn't already exist
+      command: mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.old
+      when: not default_stat.stat.exists
+
+
+    - name: Create a new default file for nginx
+      template: src=~/codefellows/401/lab/django-imager/imagersite/ansible/templates/nginx_config.jinja2 dest=/etc/nginx/sites-available/default
+
+    - name: Restart nginx service
+      service: name=nginx state=restarted
