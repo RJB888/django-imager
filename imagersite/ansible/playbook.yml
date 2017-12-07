@@ -53,3 +53,19 @@
 
     - name: Restart nginx service
       service: name=nginx state=restarted
+
+    - name: Copy the upstart script into /ect/init
+      template:
+      src=~/codefellows/401/lab/django-imager/imagersite/ansible/templates/upstart_config
+      dest=/etc/init/imagersite.conf
+
+    - name: Start the bookap service
+      service:
+        name=imagersite
+        state=restarted
+
+
+    # make sure nginx points to static directory
+    # migrate all of your django migrations
+    # ./manage.py collectstatic
+
