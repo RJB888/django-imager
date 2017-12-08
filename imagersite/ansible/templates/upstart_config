@@ -8,4 +8,10 @@ setuid nobody
 setgid nogroup
 chdir /home/ubuntu/django-imager/imagersite/
 
-exec /home/ubuntu/django-imager/ENV/bin/gunicorn -b :8080 /home/ubuntu/django-imager/imagersite/imagersite/wisgi:application
+env SECRET_KEY="{{ secret_key }}"
+env DB_NAME="{{ db_name }}"
+env DB_HOST="{{ db_host }}"
+env DB_USER="{{ db_user }}"
+env DB_PASSWORD="{{ db_password }}"
+
+exec /home/ubuntu/django-imager/ENV/bin/gunicorn -b :8080 imagersite.wsgi:application
