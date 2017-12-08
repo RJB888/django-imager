@@ -2,6 +2,8 @@
 - hosts: aws_remote
   become: yes
   become_method: sudo
+  environment:
+    SECRET_KEY: '_%i_^+0c3*8eu=tgcwj4eq7yy*!l9t!_pi+x_cd^eqzya(fd8('
   tasks:
 
     - name: update ubuntu system
@@ -55,11 +57,17 @@
       service: name=nginx state=restarted
 
     - name: Copy the upstart script into /ect/init
-      template:
-      src=~/codefellows/401/lab/django-imager/imagersite/ansible/templates/upstart_config
-      dest=/etc/init/imagersite.conf
+      template: src=~/codefellows/401/lab/django-imager/imagersite/ansible/templates/upstart_config dest=/etc/init/imagersite.conf
 
-    - name: Start the bookap service
+    - django_manage:
+        command: migrate
+        virtualenv: /home/ubuntu/django-imager/ENV
+        app_path: /home/ubuntu/django-imager/imagersite
+
+    - django_manage:
+        command: collectstatic
+
+    - name: Start the imagersite service
       service:
         name=imagersite
         state=restarted
