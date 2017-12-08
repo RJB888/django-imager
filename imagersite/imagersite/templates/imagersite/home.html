@@ -1,6 +1,15 @@
 {% extends "imagersite/base.html"%}
 
 {% block content2 %}
+        {% if request.user.is_authenticated %}
+        {% else %}
+          <h4>Are you a registered user?  Log in here home template:</h4>
+          <a href="{% url 'auth_login' %}">Log in</a>
+          <h4>To resgister for this service, click here:</h4>
+          <a href="{% url 'registration_register' %}">Register Here</a>
+        {% endif %}
+        
+
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
