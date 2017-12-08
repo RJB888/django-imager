@@ -8,7 +8,6 @@ Faker==0.8.7
 gunicorn==19.7.1
 MarkupSafe==1.0
 olefile==0.44
-paramiko==2.4.0
 Pillow==4.3.0
 psycopg2==2.7.3.2
 python-dateutil==2.6.1

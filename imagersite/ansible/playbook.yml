@@ -34,7 +34,7 @@
     - name: Install gunicorn to the virtual environment
       pip:
         virtualenv=/home/ubuntu/django-imager/ENV
-        name=gunicor
+        name=gunicorn
 
     - name: Install django-imager app
       pip:
