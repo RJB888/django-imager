@@ -34,7 +34,7 @@
     - name: Install gunicorn to the virtual environment
       pip:
         virtualenv=/home/ubuntu/django-imager/ENV
-        name=gunicorn
+        name=gunicor
 
     - name: Install django-imager app
       pip:
@@ -59,7 +59,8 @@
     - name: Copy the upstart script into /ect/init
       template: src=~/codefellows/401/lab/django-imager/imagersite/ansible/templates/upstart_config dest=/etc/init/imagersite.conf
 
-    - django_manage:
+    - name: Apply migrations to the database
+      django_manage:
         command: migrate
         virtualenv: /home/ubuntu/django-imager/ENV
         app_path: /home/ubuntu/django-imager/imagersite
