@@ -4,6 +4,11 @@
   become_method: sudo
   environment:
     SECRET_KEY: '_%i_^+0c3*8eu=tgcwj4eq7yy*!l9t!_pi+x_cd^eqzya(fd8('
+    DB_NAME: 'imager'
+    DB_HOST: 'djangoimager.cotmyqcnyupv.us-west-2.rds.amazonaws.com'
+    DB_USER: 'RobertMax'
+    DB_PASSWORD: 'SuperPotato'
+    TEST_DB: 'imager_test'
   tasks:
 
     - name: update ubuntu system
@@ -21,6 +26,15 @@
         - git
         - python3-dev
         - libpq-dev
+        - libtiff5-dev
+        - libjpeg8-dev
+        - zlib1g-dev
+        - libfreetype6-dev
+        - liblcms2-dev
+        - libwebp-dev
+        - tcl8.6-dev
+        - tk8.6-dev
+        - python-tk
 
     - name: clone Django Imagersite
       git:
@@ -65,13 +79,19 @@
         virtualenv: /home/ubuntu/django-imager/ENV
         app_path: /home/ubuntu/django-imager/imagersite
 
-    - django_manage:
+    - name: Collect static files
+      django_manage:
         command: collectstatic
+        app_path: /home/ubuntu/django-imager/imagersite
+        virtualenv: /home/ubuntu/django-imager/ENV
 
-    - name: Start the imagersite service
-      service:
-        name=imagersite
-        state=restarted
+    - name: Restart the imagersite upstart job
+      service: name=imagersite state=restarted
+
+    # - name: Start the imagersite service
+    #   service:
+    #     name=imagersite
+    #     state=restarted
 
 
     # make sure nginx points to static directory

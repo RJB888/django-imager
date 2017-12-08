@@ -6,6 +6,6 @@ stop on runlevel [016]
 respawn
 setuid nobody
 setgid nogroup
-chdir /home/ubuntu/imagersite/src/
+chdir /home/ubuntu/django-imager/imagersite/
 
-exec /home/ubuntu/django-imager/ENV/bin/gunicorn -b :8080 /home/ubuntu/django-imager/imagersite/imagersite/wisgi.py:application
+exec /home/ubuntu/django-imager/ENV/bin/gunicorn -b :8080 /home/ubuntu/django-imager/imagersite/imagersite/wisgi:application
