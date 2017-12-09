@@ -13,7 +13,7 @@ env DB_NAME="{{ db_name }}"
 env DB_HOST="{{ db_host }}"
 env DB_USER="{{ db_user }}"
 env DB_PASSWORD="{{ db_password }}"
-env AWS_ACCESS_KEY_ID="{{ aws_access_key_id }}"
+env AWS_ACCES_KEY_ID="{{ aws_access_key_id }}"
 env AWS_SECRET_ACCESS_KEY="{{ aws_secret_access_key }}"
 env DEBUG="False"
 
