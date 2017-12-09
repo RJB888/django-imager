@@ -143,8 +143,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 if DEBUG:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
-
-
 else:
     AWS_STORAGE_BUCKET_NAME = 'django-rob-max'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
