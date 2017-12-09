@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 # ALLOWED_HOSTS = ['ec2-35-160-254-208.us-west-2.compute.amazonaws.com', '35.160.254.208']
 ALLOWED_HOSTS = '*'
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'imagersite',
     'bootstrap3',
     'imager_images',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -129,16 +130,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-
-STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-MEDIA_URL = '/media/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA")
-
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_REDIRECT_URL = 'my_profile'
@@ -146,3 +139,23 @@ LOGIN_REDIRECT_URL = 'my_profile'
 LOGOUT_REDIRECT_URL = 'homepage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+if DEBUG:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+
+
+else:
+    AWS_STORAGE_BUCKET_NAME = 'django-rob-max'
+    AWS_ACCES_KEY_ID = os.environ.get('AWS_ACCES_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+
+    STATICFILES_LOCATION = 'static'
+    MEDIAFILES_LOCATION = 'media'
+
+    STATICFILES_STORAGE = 'imagersite.custom_storages.StaticStorage'
+    DEFAULT_FILE_STORAGE = 'imagersite.custom_storages.MediaStorage'
+
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
