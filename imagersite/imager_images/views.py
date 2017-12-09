@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from imager_profile.models import ImagerProfile
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import permissions
+from rest_framework.decorators import permission_classes
 
 # Create your views here.
 
@@ -128,6 +130,7 @@ class EditAlbumView(UpdateView):
 #         serializer = PhotoSerializer(users_photos, many=True)
 #         return Response(serializer.data)
 
+@permission_classes((permissions.IsAuthenticated, ))
 class PhotoList(generics.ListCreateAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
