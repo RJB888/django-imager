@@ -8,6 +8,12 @@ from django.views.generic.edit import UpdateView
 from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
 from django.urls import reverse_lazy
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from imager_images.models import Photo
+from imager_images.serializers import PhotoSerializer
 
 # Create your views here.
 
@@ -71,7 +77,7 @@ class CreatePhotoView(CreateView):
 
     fields = ['title', 'description', 'published', 'user', 'image']
     success_url = reverse_lazy('library')
-    
+
     # def post(self, *args, **kwargs):
     #     import pdb; pdb.set_trace()
     #     context = super(CreatePhotoView, self).post(**kwargs)
@@ -108,3 +114,15 @@ class EditAlbumView(UpdateView):
 
     fields = ['title', 'description', 'published', 'user', 'photo', 'cover']
     success_url = reverse_lazy('library')
+
+
+def photo_list(request, username):
+    """List all photo objects associated with one user."""
+    if request.method == 'GET':
+        photos = Photo.objects.all()
+        users_photos = [photo for photo in photos if photo.user.user.username == username]
+        # for photo in photos:
+        #     if photo.user.username == username:
+        #         users_photos.append(photo)
+        serializer = PhotoSerializer(users_photos, many=True)
+        return JsonResponse(serializer.data, safe=False)

@@ -55,6 +55,7 @@ urlpatterns = [
         name="public_album"),
     url(r'^images/users/(?P<pk>\d+)', UpdateUserView.as_view(),
         name="update_user"),
+    url(r'^api/v1/(\w+)', image_views.photo_list)
 ]
 
 
