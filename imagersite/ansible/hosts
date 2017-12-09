@@ -10,3 +10,5 @@ db_name=imager
 db_host=djangoimager.cotmyqcnyupv.us-west-2.rds.amazonaws.com
 db_user=RobertMax
 db_password=SuperPotato
+aws_access_key_id=AKIAIYDZ6QLCHISSHTGQ
+aws_secret_access_key=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
