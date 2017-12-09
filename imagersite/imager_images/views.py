@@ -5,15 +5,15 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
-from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
 from django.urls import reverse_lazy
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from imager_images.models import Photo
+from rest_framework.response import Response
 from imager_images.serializers import PhotoSerializer
+from rest_framework import status
+from django.contrib.auth.models import User
+from imager_profile.models import ImagerProfile
+from rest_framework import mixins
+from rest_framework import generics
 
 # Create your views here.
 
@@ -116,13 +116,25 @@ class EditAlbumView(UpdateView):
     success_url = reverse_lazy('library')
 
 
-def photo_list(request, username):
-    """List all photo objects associated with one user."""
-    if request.method == 'GET':
-        photos = Photo.objects.all()
-        users_photos = [photo for photo in photos if photo.user.user.username == username]
-        # for photo in photos:
-        #     if photo.user.username == username:
-        #         users_photos.append(photo)
+# def photo_list(request, username, format=None):
+#     """List all photo objects associated with, one user."""
+#     try:
+#         my_user = User.objects.get(username=username)
+#         my_profile = ImagerProfile.active.get(user=my_user)
+#         users_photos = Photo.objects.filter(user=my_profile)
+#     except:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#     if request.method == 'GET':
+#         serializer = PhotoSerializer(users_photos, many=True)
+#         return Response(serializer.data)
+
+class PhotoList(generics.ListCreateAPIView):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+
+    def list(self, request, username):
+        my_user = User.objects.get(username=username)
+        my_profile = ImagerProfile.active.get(user=my_user)
+        users_photos = Photo.objects.filter(user=my_profile)
         serializer = PhotoSerializer(users_photos, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)

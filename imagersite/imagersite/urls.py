@@ -20,6 +20,7 @@ from django.contrib.auth import views as log_views
 from imager_profile.views import my_proflie_view, other_profile_view, UpdateProfileView, UpdateUserView
 from django.conf.urls.static import static
 from imager_images import views as image_views
+from rest_framework.urlpatterns import format_suffix_patterns
 # from imager_images.views import PublishedPhotoView,\
 #     IndividualPhotoView, IndividualAlbumView, PublishedAlbumView,\
 #     CreatePhotoView
@@ -55,8 +56,10 @@ urlpatterns = [
         name="public_album"),
     url(r'^images/users/(?P<pk>\d+)', UpdateUserView.as_view(),
         name="update_user"),
-    url(r'^api/v1/(\w+)', image_views.photo_list)
+    url(r'^api/v1/(\w+)', image_views.PhotoList.as_view())
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
 
 
 if settings.DEBUG:
