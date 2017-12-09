@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,16 +17,12 @@
   </head>
 
   <body>
-    {% block content %}{% endblock %}
-
-
-
+    {% block content %}
+    {% endblock %}
     {% if request.user.is_authenticated %}
         <p>Logged in: <a href="{% url 'my_profile' %}">{{ user.username }}</a></p>
         <a href="{% url 'auth_logout' %}">Log out</a> |
         <a href="{% url 'auth_password_change' %}">Change Password</a>
-    {% else %}
-       <a href="{% url 'auth_login' %}">Log in</a>
     {% endif %}
     <hr />
     <!-- {% static 'bootstrap.css' %} -->

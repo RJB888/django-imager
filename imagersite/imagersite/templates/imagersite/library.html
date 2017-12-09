@@ -4,31 +4,7 @@
 
 
 {% block content2 %}
-<!-- context['album_list'][0].cover.image -->
 <h2>Library</h2>
-<!--     <h3>Albums</h3>
-    <ul class='list-unstyled'>
-    {% for album in users_albums %}
-        <li>{{ album.title }}</li>
-        {% if album.cover %}
-        <li>{% thumbnail album.cover.image "100x100" crop="center" as im %}
-    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
-            {% endthumbnail %}</li>
-        {% else %}
-        <li><img src="{% static '100x100.png' %}"/>
-        </li>
-        {% endif %}
-    {% endfor %}
-    </ul>s
-    <h3>Photos</h3>
-    <ul class='list-unstyled'>
-    {% for photo in users_photos %}
-        <li>{{ photo.title }}</li>
-        <li>{% thumbnail photo.image "100x100" crop="center" as im %}
-    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="words">
-            {% endthumbnail %}</li>
-    {% endfor %}
-    </ul> -->
 <h3>Albums</h3>
     <div class="container-fluid">
         <div class='row'>

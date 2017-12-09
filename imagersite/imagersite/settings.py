@@ -142,4 +142,6 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_REDIRECT_URL = 'my_profile'
 
+LOGOUT_REDIRECT_URL = 'homepage'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
