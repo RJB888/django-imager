@@ -16,6 +16,7 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.decorators import permission_classes
+from imager_images.permissions import IsOwnerOrReadOnly
 
 # Create your views here.
 
@@ -130,7 +131,7 @@ class EditAlbumView(UpdateView):
 #         serializer = PhotoSerializer(users_photos, many=True)
 #         return Response(serializer.data)
 
-@permission_classes((permissions.IsAuthenticated, ))
+@permission_classes((permissions.IsAuthenticated,))
 class PhotoList(generics.ListCreateAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
