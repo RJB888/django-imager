@@ -3,12 +3,15 @@
   become: yes
   become_method: sudo
   environment:
-    SECRET_KEY: '_%i_^+0c3*8eu=tgcwj4eq7yy*!l9t!_pi+x_cd^eqzya(fd8('
+    SECRET_KEY:
     DB_NAME: 'imager'
     DB_HOST: 'djangoimager.cotmyqcnyupv.us-west-2.rds.amazonaws.com'
     DB_USER: 'RobertMax'
     DB_PASSWORD: 'SuperPotato'
     TEST_DB: 'imager_test'
+    AWS_SECRET_ACCESS_KEY: 'u+FoTisw8dnIaedw/b1VMvcLVJfJ5sfWL6SD4+Di'
+    AWS_ACCESS_KEY_ID: 'AKIAIYDZ6QLCHISSHTGQ'
+
   tasks:
 
     - name: update ubuntu system
