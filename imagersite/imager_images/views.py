@@ -44,6 +44,8 @@ class PublishedAlbumView(ListView):
 
     template_name = 'imagersite/public_albums.html'
     model = Album
+    paginate_by = 4
+    queryset = Album.objects.filter(published="PBL").all()
 
     def get_context_data(self, **kwargs):
         """."""
