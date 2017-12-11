@@ -104,3 +104,5 @@ node_modules
 
 imagersite/MEDIA/*
 !imagersite/MEDIA/.gitkeep
+
+imagersite/ansible
