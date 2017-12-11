@@ -33,6 +33,7 @@ class LibraryView(ListView):
     """."""
     template_name = 'imagersite/library.html'
     model = Album
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         """."""

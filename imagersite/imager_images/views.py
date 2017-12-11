@@ -17,6 +17,8 @@ class PublishedPhotoView(ListView):
 
     template_name = 'imagersite/public_photos.html'
     model = Photo
+    paginate_by = 4
+    queryset = Photo.objects.filter(published="PBL").all()
 
     def get_context_data(self, **kwargs):
         """."""
