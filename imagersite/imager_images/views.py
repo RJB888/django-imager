@@ -24,6 +24,7 @@ class PublishedPhotoView(ListView):
         """."""
         context = super(PublishedPhotoView, self).get_context_data(**kwargs)
         context['display_photos'] = Photo.objects.filter(published="PBL").all()
+        # import pdb; pdb.set_trace()
         return context
 
 
