@@ -32,6 +32,7 @@ def home_view(request):
 
 class LibraryView(ListView):
     """."""
+
     template_name = 'imagersite/library.html'
     model = Album
     paginate_by = 4
@@ -45,7 +46,6 @@ class LibraryView(ListView):
         context['users_albums'] = users_albums
         photo_paginator = Paginator(users_photos, 4)
         album_paginator = Paginator(users_albums, 4)
-        # import pdb; pdb.set_trace()
         photo_page = self.request.GET.get('photo_page')
         try:
             display_photos = photo_paginator.page(photo_page)
@@ -58,6 +58,4 @@ class LibraryView(ListView):
         except PageNotAnInteger:
             display_albums = album_paginator.page(1)
         context['display_albums'] = display_albums
-        # import pdb; pdb.set_trace()
         return context
-

@@ -1,11 +1,9 @@
 """."""
 
-from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
-from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
 from django.urls import reverse_lazy
 

@@ -14,8 +14,6 @@ from django.urls import reverse_lazy
 
 import pdb
 
-# Create your tests here.
-
 
 class UserFactory(factory.django.DjangoModelFactory):
     """."""
@@ -261,17 +259,3 @@ class ImagesTestCase(TestCase):
                                 'published': 'PBL',
                                 'user': user1.id})
         self.assertTrue(res.url == '/images/library/')
-
-
-"""
-Test that one user can have several photos
-Test that each photo can only have one user
-test photos have attributes
-Test One album owned by one user
-Test one user can own several albums
-Test any photo can be in more than one album
-Test user can designate cover photo
-Test album can have more than one photo
-Test album cannot have photos from different users.
-
-"""

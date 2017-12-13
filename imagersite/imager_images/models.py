@@ -44,8 +44,3 @@ class Album(models.Model):
     def __str__(self):
         """."""
         return self.title
-
-# new stuff
-
-# @receiver(post_save, sender=User)
-# def create_profile(sender, **kwargs):
