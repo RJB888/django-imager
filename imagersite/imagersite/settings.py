@@ -165,3 +165,5 @@ else:
     EMAIL_HOST_USER = 'maxrobdjango@gmail.com'
     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
     EMAIL_PORT = 587
+    SERVER_EMAIL = 'maxrobdjango@gmail.com'
+    DEFAULT_FROM_EMAIL = 'maxrobdjango@gmail.com'
