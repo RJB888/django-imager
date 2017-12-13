@@ -58,6 +58,6 @@ class LibraryView(ListView):
         except PageNotAnInteger:
             display_albums = album_paginator.page(1)
         context['display_albums'] = display_albums
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         return context
 
