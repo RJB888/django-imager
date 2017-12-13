@@ -24,7 +24,6 @@ class PublishedPhotoView(ListView):
         """."""
         context = super(PublishedPhotoView, self).get_context_data(**kwargs)
         context['display_photos'] = Photo.objects.filter(published="PBL").all()
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -52,7 +51,6 @@ class PublishedAlbumView(ListView):
         """."""
         context = super(PublishedAlbumView, self).get_context_data(**kwargs)
         context['display_albums'] = Album.objects.filter(published="PBL").all()
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -76,11 +74,6 @@ class CreatePhotoView(CreateView):
 
     fields = ['title', 'description', 'published', 'user', 'image']
     success_url = reverse_lazy('library')
-    
-    # def post(self, *args, **kwargs):
-    #     import pdb; pdb.set_trace()
-    #     context = super(CreatePhotoView, self).post(**kwargs)
-    #     return context
 
 
 class EditPhotoView(UpdateView):

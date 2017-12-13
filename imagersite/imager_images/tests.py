@@ -58,10 +58,8 @@ class ImagesTestCase(TestCase):
 
     def setUp(self):
         """Make object."""
-        print('this ran')
         user1 = UserFactory.create(username="Bob", first_name='Bob', last_name='Boberts')
         profile1 = ImagerProfile.active.get(user=user1)
-        # profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
         user2 = UserFactory.create(username="Jim")
         profile2 = ImagerProfile.active.get(user=user2)
         photo1 = PhotoFactory.create(title='title', description='Elephant', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
@@ -74,8 +72,6 @@ class ImagesTestCase(TestCase):
         album2 = AlbumFactory(title="Second", description='im private',
                               published="PVT", user=profile1)
         album2.photo.add(photo2)
-
-
 
     def test_setup(self):
         """."""
@@ -169,7 +165,6 @@ class ImagesTestCase(TestCase):
         file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
         photo = SimpleUploadedFile('dreams.jpg', file.read())
         user1 = ImagerProfile.active.first()
-        print('testt')
         self.client.post(reverse_lazy('photo_form'),
                          {'title': 'Whaddup',
                           'description': 'I made this',
@@ -196,7 +191,6 @@ class ImagesTestCase(TestCase):
     def test_post_to_create_album(self):
         """A post request to the add album route should add it to db."""
         user1 = ImagerProfile.active.first()
-        print('testt')
         self.client.post(reverse_lazy('album_form'),
                          {'title': 'Thriller',
                           'description': 'I made this',
