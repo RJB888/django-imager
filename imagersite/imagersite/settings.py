@@ -138,11 +138,11 @@ LOGIN_REDIRECT_URL = 'my_profile'
 
 LOGOUT_REDIRECT_URL = 'homepage'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 if DEBUG:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     AWS_STORAGE_BUCKET_NAME = 'django-rob-max'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -157,3 +157,11 @@ else:
 
     STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'robmaxdjango@gmail.com'
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    EMAIL_PORT = 587

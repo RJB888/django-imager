@@ -38,14 +38,9 @@ class Album(models.Model):
     date_published = models.DateField(auto_now_add=True)
     published = models.CharField(max_length=15, choices=PUBLISHED_CHOICES)
     user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE, related_name='album')
-    photo = models.ManyToManyField(Photo, blank=True, null=True, related_name='album')
+    photo = models.ManyToManyField(Photo, blank=True, related_name='album')
     cover = models.ForeignKey(Photo, related_name='cover', blank=True, null=True)
 
     def __str__(self):
         """."""
         return self.title
-
-# new stuff
-
-# @receiver(post_save, sender=User)
-# def create_profile(sender, **kwargs):

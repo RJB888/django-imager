@@ -48,7 +48,7 @@ class ProfileTestCase(TestCase):
         """Homepage shows photos when they exist in database."""
         User.objects.create(username='Bob')
         user1 = User.objects.get(username='Bob')
-        profile1 = ImagerProfile.active.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
+        profile1 = ImagerProfile.active.get(user=user1)
         Photo.objects.create(title='title', description=' ', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
         c = Client()
         response = c.get('/')
