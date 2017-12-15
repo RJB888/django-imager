@@ -1,0 +1,29 @@
+{% extends "imagersite/base.html" %}
+
+{% block content2 %}
+<h1>{{profile.user.username}}'s Profile</h1>
+<div>
+    <h2>Photo Stats</h2>
+    <ul>
+        <li>You have {{ pub_photos|length }} public photos</li>
+        <li>You have {{ pub_albums|length }} public albums</li>
+    </ul>
+</div>
+<div>
+    <h2></h2>
+        <ul>
+        <li>Username: {{ profile.user.username }}</li>
+        <li>website: {{ profile.website }}</li>
+        <li>location: {{ profile.location }}</li>
+        <li>fee: ${{ profile.fee }}</li>
+    </ul>
+</div>
+<div>
+    <h2></h2>
+        <ul>
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+    </ul>
+</div>
+{% endblock%}

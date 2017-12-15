@@ -1,0 +1,35 @@
+{% extends "imagersite/base.html" %}
+
+{% block content2 %}
+<h1>{{request.user.username}}'s Profile</h1>
+<div>
+    {% if request.user.is_authenticated %}
+    <h2>Photo Stats</h2>
+    <ul>
+        <li>You have {{ pub_photos|length }} public photos</li>
+        <li>You have {{ pub_albums|length }} public albums</li>
+        <li>You have {{ priv_photos|length }} private photos</li>
+        <li>You have {{ priv_albums|length }} private albums</li>
+    </ul>
+    {% endif %}
+</div>
+<div>
+    <h2>Personal Info</h2>
+    <ul>
+        <li>First Name: {{ profile.user.first_name }}</li>
+        <li>Last Name: {{ profile.user.last_name }}</li>
+        <li>Username: {{ profile.user.username }}</li>
+        <li>email: {{ profile.user.email }}</li>
+        <li>phone: {{ profile.phone }}</li>
+        <li>website: {{ profile.website }}</li>
+        <li>location: {{ profile.location }}</li>
+        <li>fee: ${{ profile.fee }}</li>
+    </ul>
+</div>
+<div>
+    <a href="{% url 'update_profile' pk=profile.id %}"><button type="button" class="btn btn-primary">Edit Profile</button></a>
+</div>
+<div>
+    <a href="{% url 'update_user' pk=profile.user.id %}"><button type="button" class="btn btn-primary">Edit User</button></a>
+</div>
+{% endblock%}
