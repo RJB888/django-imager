@@ -8,6 +8,7 @@ from imager_profile.views import my_proflie_view, other_profile_view, UpdateProf
 from django.conf.urls.static import static
 from imager_images import views as image_views
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home_view, name='homepage'),
