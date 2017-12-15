@@ -11,25 +11,23 @@ from .models import ImagerProfile
 class ProfileTestCase(TestCase):
     """."""
 
-    def setup(self):
-        bob = User()
-        bob.username = "Joe"
-        bob_profile = ImagerProfile()
-        bob_profile.user = bob
-        bob = User()
-        bob_profile.website = "James.com"
-        jim.username = "Jeff"
-        jim_profile = ImagerProfile()
-        jim_profile.user = jim
-        profile1 = ImagerProfile.active.create()
-
     def test_imager_profile_class(self):
         """."""
-        profile = ImagerProfile.active.get(website="James.com")
-        self.assertEqual(profile.user.username, "Joe")
+        User.objects.create(username='Bob')
+        user1 = User.objects.get(username='Bob')
+        profile = ImagerProfile.active.get(user=user1)
+        profile.location = 'here'
+        self.assertEqual(profile.user.username, "Bob")
+        self.assertEqual(profile.location, "here")
 
     def test_user_is_active(self):
         """."""
-        profile = ImagerProfile.active.get(website="James.com")
+        User.objects.create(username='Bob')
+        user1 = User.objects.get(username='Bob')
+        User.objects.create(username='Joe')
+        user2 = User.objects.get(username='Joe')
+        profile = ImagerProfile.active.get(user=user1)
+        profile2 = ImagerProfile.active.get(user=user2)
 
         self.assertEqual(profile.is_active, True)
+        self.assertEqual(profile2.is_active, True)

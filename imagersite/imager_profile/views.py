@@ -3,11 +3,6 @@ from django.views.generic.edit import UpdateView
 from imager_profile.models import ImagerProfile
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-import pdb
-# from django.http import HttpResponse
-# from django.template import loader
-
-# Create your views here.
 
 
 def my_proflie_view(request):

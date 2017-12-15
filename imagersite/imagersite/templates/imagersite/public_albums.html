@@ -4,7 +4,7 @@
 
 {% block content2 %}
 <ul>
-    {% for album in display_albums %}
+    {% for album in object_list %}
         <li>{{ album.title }}</li>
         {% if album.cover %}
         <li><a href="./{{ album.id }}">{% thumbnail album.cover.image "100x100" crop="center" as im %}
@@ -16,4 +16,16 @@
         {% endif %}
     {% endfor %}
 </ul>
+
+{% if is_paginated %}
+    <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-primary">Previous</button></a></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-primary">Next</button></a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
 {% endblock %}

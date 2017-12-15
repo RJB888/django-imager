@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = bool(eval(os.environ.get('DEBUG', 'False')))
 
-# ALLOWED_HOSTS = ['ec2-35-160-254-208.us-west-2.compute.amazonaws.com', '35.160.254.208']
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = ['ec2-35-160-254-208.us-west-2.compute.amazonaws.com', '35.160.254.208']
+# ALLOWED_HOSTS = ['ec2-35-160-254-208.us-west-2.compute.amazonaws.com', '35.160.254.208', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -84,6 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get("DB_NAME", ''),
+        # 'NAME': 'nickdb',
         'USER': os.environ.get('DB_USER', ''),
         'PASSWORD': os.environ.get("DB_PASSWORD", ''),
         'HOST': os.environ.get('DB_HOST', ''),
@@ -130,24 +131,31 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA")
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_REDIRECT_URL = 'my_profile'
 
 LOGOUT_REDIRECT_URL = 'homepage'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'maxrobdjango@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_PORT = 587
+SERVER_EMAIL = 'maxrobdjango@gmail.com'
+DEFAULT_FROM_EMAIL = 'maxrobdjango@gmail.com'
 
 if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA")
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
-
-
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     AWS_STORAGE_BUCKET_NAME = 'django-rob-max'
-    AWS_ACCES_KEY_ID = os.environ.get('AWS_ACCES_KEY_ID')
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
 

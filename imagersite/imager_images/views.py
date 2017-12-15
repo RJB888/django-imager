@@ -1,11 +1,9 @@
 """."""
 
-from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
-from django.core.urlresolvers import reverse
 from imager_images.models import Photo, Album
 from django.urls import reverse_lazy
 
@@ -17,6 +15,8 @@ class PublishedPhotoView(ListView):
 
     template_name = 'imagersite/public_photos.html'
     model = Photo
+    paginate_by = 4
+    queryset = Photo.objects.filter(published="PBL").all()
 
     def get_context_data(self, **kwargs):
         """."""
@@ -42,12 +42,13 @@ class PublishedAlbumView(ListView):
 
     template_name = 'imagersite/public_albums.html'
     model = Album
+    paginate_by = 4
+    queryset = Album.objects.filter(published="PBL").all()
 
     def get_context_data(self, **kwargs):
         """."""
         context = super(PublishedAlbumView, self).get_context_data(**kwargs)
         context['display_albums'] = Album.objects.filter(published="PBL").all()
-        # import pdb; pdb.set_trace()
         return context
 
 
@@ -71,11 +72,6 @@ class CreatePhotoView(CreateView):
 
     fields = ['title', 'description', 'published', 'user', 'image']
     success_url = reverse_lazy('library')
-    
-    # def post(self, *args, **kwargs):
-    #     import pdb; pdb.set_trace()
-    #     context = super(CreatePhotoView, self).post(**kwargs)
-    #     return context
 
 
 class EditPhotoView(UpdateView):

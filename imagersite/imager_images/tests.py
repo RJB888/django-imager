@@ -14,8 +14,6 @@ from django.urls import reverse_lazy
 
 import pdb
 
-# Create your tests here.
-
 
 class UserFactory(factory.django.DjangoModelFactory):
     """."""
@@ -58,12 +56,10 @@ class ImagesTestCase(TestCase):
 
     def setUp(self):
         """Make object."""
-        print('this ran')
         user1 = UserFactory.create(username="Bob", first_name='Bob', last_name='Boberts')
-        # user1.save()
-        profile1 = ProfileFactory.create(user=user1, website='test', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
+        profile1 = ImagerProfile.active.get(user=user1)
         user2 = UserFactory.create(username="Jim")
-        profile2 = ProfileFactory.create(user=user2, website='google', location='here', bio='isuck', phone='phone', fee=10, services='WD', photo_styles='BW')
+        profile2 = ImagerProfile.active.get(user=user2)
         photo1 = PhotoFactory.create(title='title', description='Elephant', published='PBL', user=profile1, image='https://i.vimeocdn.com/portrait/58832_300x300')
 
         photo2 = PhotoFactory.create(title='White Elephant', description='in the room', published='PVT', user=profile1, image='https://pixabay.com/p-361514/?no_redirect')
@@ -71,16 +67,9 @@ class ImagesTestCase(TestCase):
         album1 = AlbumFactory(title="First", description='who cares',
                               published="PBL", user=profile1)
         album1.photo.add(photo1)
-        # import pdb; pdb.set_trace()
         album2 = AlbumFactory(title="Second", description='im private',
                               published="PVT", user=profile1)
-        # import pdb; pdb.set_trace()
         album2.photo.add(photo2)
-        # album3 = AlbumFactory(title="Third",
-        #                       published="PVT",
-        #                       user=user2
-        #                       )
-        # album3.save()
 
     def test_setup(self):
         """."""
@@ -174,7 +163,6 @@ class ImagesTestCase(TestCase):
         file = open(os.path.join(BASE_DIR, 'MEDIA/images/dreams.jpg'), 'rb')
         photo = SimpleUploadedFile('dreams.jpg', file.read())
         user1 = ImagerProfile.active.first()
-        print('testt')
         self.client.post(reverse_lazy('photo_form'),
                          {'title': 'Whaddup',
                           'description': 'I made this',
@@ -201,7 +189,6 @@ class ImagesTestCase(TestCase):
     def test_post_to_create_album(self):
         """A post request to the add album route should add it to db."""
         user1 = ImagerProfile.active.first()
-        print('testt')
         self.client.post(reverse_lazy('album_form'),
                          {'title': 'Thriller',
                           'description': 'I made this',
@@ -272,17 +259,3 @@ class ImagesTestCase(TestCase):
                                 'published': 'PBL',
                                 'user': user1.id})
         self.assertTrue(res.url == '/images/library/')
-
-
-"""
-Test that one user can have several photos
-Test that each photo can only have one user
-test photos have attributes
-Test One album owned by one user
-Test one user can own several albums
-Test any photo can be in more than one album
-Test user can designate cover photo
-Test album can have more than one photo
-Test album cannot have photos from different users.
-
-"""
