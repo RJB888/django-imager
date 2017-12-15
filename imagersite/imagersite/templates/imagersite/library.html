@@ -57,4 +57,7 @@
             <a href="?album_page={{ display_albums.next_page_number }}&photo_page={{ display_photo.number }}">next</a>
     {% endif %}
 
+    <a href="{% url 'photo_form' %}"><button type="button" class="btn btn-primary">Add Photo</button></a>
+    <a href="{% url 'album_form' %}"><button type="button" class="btn btn-primary">Add Album</button></a>
+
 {% endblock %}
